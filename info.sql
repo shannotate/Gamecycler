@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS `cyclerinfo`;
 CREATE DATABASE IF NOT EXISTS `cyclerinfo`;
-USE `info`;
+USE `cyclerinfo`;
 
 --
 -- Defining a table to hold game listings
