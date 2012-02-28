@@ -25,74 +25,81 @@ License: Creative Commons Attribution
     <div id="nav">
     	<ul>
         	<li class="start"><a href="index.php">Home</a></li>
-            <li><a href="createaccount.php">Sign Up</a></li>
-			<li><a href="login.php">Login</a></li>
-			<li><a href="gamesubmit.php">Submit a Game</a></li>
             <li><a href="search.php">Search Games</a></li>
-            <li><a href="usersearch.php">Search Users</a></li>
+			<?php
+			if (isset($_SESSION['firstname'])) {
+				echo "<li><a href=\"logout.php\">Logout</a></li>";
+				echo "<li><a href=\"gamesubmit.php\">Submit a Game</a></li>";
+			}
+			else {
+				echo "<li><a href=\"login.php\">Login</a></li>";
+				echo "<li><a href=\"createaccount.php\">Sign Up</a></li>";
+			}
+			?>
         </ul>
     </div>
     <div id="body">
 		<div id="content">
 		
 			<?php
-				include "db_connect.php";
-				$email = mysqli_real_escape_string($db, $_POST['email']);
-				$password =  mysqli_real_escape_string($db, $_POST['password']);
+			include "db_connect.php";
+			$email = mysqli_real_escape_string($db, $_POST['email']);
+			$password =  mysqli_real_escape_string($db, $_POST['password']);
+			
+			if ($_GET['newaccount'] == 1) {
+				$firstname = mysqli_real_escape_string($db, $_POST['firstname']);
+				$lastname = mysqli_real_escape_string($db, $_POST['lastname']);
+				$street = mysqli_real_escape_string($db, $_POST['address']);
+				$apt = mysqli_real_escape_string($db, $_POST['apt']);
+				$country = mysqli_real_escape_string($db, $_POST['country']);
+				$city = mysqli_real_escape_string($db, $_POST['city']);
+				$zipcode = mysqli_real_escape_string($db, $_POST['zipcode']);
 				
-				if ($_GET['newaccount'] == 1) {
-					$firstname = mysqli_real_escape_string($db, $_POST['firstname']);
-					$lastname = mysqli_real_escape_string($db, $_POST['lastname']);
-					$street = mysqli_real_escape_string($db, $_POST['address']);
-					$apt = mysqli_real_escape_string($db, $_POST['apt']);
-					$country = mysqli_real_escape_string($db, $_POST['country']);
-					$city = mysqli_real_escape_string($db, $_POST['city']);
-					$zipcode = mysqli_real_escape_string($db, $_POST['zipcode']);
+				$query = "SELECT * FROM users WHERE `email` = '$email';";
+				
+				$result = mysqli_query($db, $query)
+					or die(mysqli_error($db));
 					
-					$query = "SELECT * FROM users WHERE `email` = '$email';";
+				if ($row = mysqli_fetch_array($result)) {
+					echo "<h2>That email address is taken.</h2>";
+				} else {
+					$query = "INSERT INTO users	(
+							`firstname`, `lastname`, `email`, `password`, `street`, `apt`, `country`, `city`, `zipcode`)
+							VALUES (
+							'$firstname', '$lastname', '$email', SHA('$password'), '$street', '$apt', '$country', '$city', '$zipcode');";
+				
+					$result = mysqli_query($db, $query)
+						or die(mysqli_error($db));
+						
+					echo "<h2>Thanks for registering, $firstname</h2>";
 					
+					$query = "SELECT * FROM users WHERE email = '$email';";
 					$result = mysqli_query($db, $query)
 						or die(mysqli_error($db));
 						
 					if ($row = mysqli_fetch_array($result)) {
-						echo "<h2>That email address is taken.</h2>";
-					} else {
-						$query = "INSERT INTO users	(
-								`firstname`, `lastname`, `email`, `password`, `street`, `apt`, `country`, `city`, `zipcode`)
-								VALUES (
-								'$firstname', '$lastname', '$email', SHA('$password'), '$street', '$apt', '$country', '$city', '$zipcode');";
-					
-						$result = mysqli_query($db, $query)
-							or die(mysqli_error($db));
-							
-						echo "<h2>Thanks for registering, $firstname</h2>";
-						
-						$query = "SELECT * FROM users WHERE email = '$email';";
-						$result = mysqli_query($db, $query)
-							or die(mysqli_error($db));
-							
-						if ($row = mysqli_fetch_array($result)) {
-							$userid = $row['userID'];
-							$_SESSION['userid'] = $userid;
-						}
-					}
-					
-				}
-				else {
-					$query = "SELECT * FROM users WHERE email = '$email' AND password = SHA('$password');";
-					$result = mysqli_query($db, $query)
-						or die(mysqli_error($db));
-					
-					if ($row = mysqli_fetch_array($result)) {
-						echo "<h2>Welcome, $firstname!</h2>";
 						$userid = $row['userID'];
-						$firstname = $row['firstname'];
-						unset($_SESSION['submitattempt']);
 						$_SESSION['userid'] = $userid;
-						} else {
-							echo "<h2>Incorrect email or password.</h2>";
-						}
+					}
 				}
+				
+			}
+			else {
+				$query = "SELECT * FROM users WHERE email = '$email' AND password = SHA('$password');";
+				$result = mysqli_query($db, $query)
+					or die(mysqli_error($db));
+				
+				if ($row = mysqli_fetch_array($result)) {
+					$_SESSION['firstname'] = $row['firstname'];
+					echo "<h2>Welcome, $_SESSION[firstname]!</h2>";
+					echo "Perhaps you'd like to <a href=\"gamesubmit.php\">submit</a> a listing?";
+					$userid = $row['userID'];
+					unset($_SESSION['submitattempt']);
+					$_SESSION['userid'] = $userid;
+					} else {
+						echo "<h2>Incorrect email or password.</h2>";
+					}
+			}
 			?>
 			
             

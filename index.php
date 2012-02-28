@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -22,40 +25,33 @@ License: Creative Commons Attribution
     <div id="nav">
     	<ul>
         	<li class="start"><a href="index.php">Home</a></li>
-            <li><a href="createaccount.php">Sign Up</a></li>
-			<li><a href="login.php">Login</a></li>
-			<li><a href="gamesubmit.php">Submit a Game</a></li>
             <li><a href="search.php">Search Games</a></li>
-            <li><a href="usersearch.php">Search Users</a></li>
+			<?php
+			if (isset($_SESSION['firstname'])) {
+				echo "<li><a href=\"logout.php\">Logout</a></li>";
+				echo "<li><a href=\"gamesubmit.php\">Submit a Game</a></li>";
+			}
+			else {
+				echo "<li><a href=\"login.php\">Login</a></li>";
+				echo "<li><a href=\"createaccount.php\">Sign Up</a></li>";
+			}
+			?>
         </ul>
     </div>
     <div id="body">
 	
 		<div id="content">
 			<h2>Welcome!</h2>
-				<?php
-				session_start();
-				if (isset($_SESSION['userid']))
-				{
-				echo "What's going on, $_SESSION[userid]?!";
-				echo "<p>&nbsp;</p><p><a href=\"logout.php\">logout</a></p>";
-				}
-				?>
+			<?php
+			if (isset($_SESSION['firstname'])) {
+				echo "What's going on, $_SESSION[firstname]?!";
+			}
+			?>
             <p><strong>GameCycler</strong> is a marketplace for buying, trading, and selling previously-owned video games on their original storage mediums.</p>
         </div>
         
         <div class="sidebar">
             <ul>	
-               <li>
-                    <h3>Navigate</h3>
-                    <ul class="blocklist">
-                        <li><a href="index.php">Home</a></li>
-						<li><a href="createaccount.php">Create an Account!</a></li>
-                        <li><a href="gamesubmit.php">Post a Game!</a></li>
-						<li><a href="search.php">Search for Games!</a></li>
-                    </ul>
-                </li>
-                
                 <li>
                     <h3>About</h3>
                     <ul>
@@ -64,21 +60,6 @@ License: Creative Commons Attribution
                         </li>
                     </ul>
                 </li>
-                
-                <li>
-                	<h3>Search</h3>
-                    <ul>
-                    	<li>
-                            <form method="get" class="searchform" action="http://wpdemo.justfreetemplates.com/" >
-                                <p>
-                                    <input type="text" size="20" value="" name="s" class="s" />
-                                    <input type="submit" class="searchsubmit formbutton" value="Search" />
-                                </p>
-                            </form>	
-						</li>
-					</ul>
-                </li>
-                
             </ul> 
         </div>
     	<div class="clear"></div>

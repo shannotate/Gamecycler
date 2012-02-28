@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -22,22 +25,24 @@ License: Creative Commons Attribution
     <div id="nav">
     	<ul>
         	<li class="start"><a href="index.php">Home</a></li>
-            <li><a href="createaccount.php">Sign Up</a></li>
-			<li><a href="login.php">Login</a></li>
-			<li><a href="gamesubmit.php">Submit a Game</a></li>
             <li><a href="search.php">Search Games</a></li>
-            <li><a href="usersearch.php">Search Users</a></li>
+			<?php
+			if (isset($_SESSION['firstname'])) {
+				echo "<li><a href=\"logout.php\">Logout</a></li>";
+				echo "<li><a href=\"gamesubmit.php\">Submit a Game</a></li>";
+			}
+			else {
+				echo "<li><a href=\"login.php\">Login</a></li>";
+				echo "<li><a href=\"createaccount.php\">Sign Up</a></li>";
+			}
+			?>
         </ul>
     </div>
     <div id="body">
 		<div id="content">
 			<?php
-			session_start();
-			if (isset($_SESSION['userid']))
-			{
-			echo "What's going on, $_SESSION[userid]?!";
-			echo "<p>&nbsp;</p><p><a href=\"logout.php\">logout</a></p>";
-			}
+			if (isset($_SESSION['firstname']))
+				echo "How're tricks, $_SESSION[firstname]?!";
 			?>
 			<h2>Search</h2>
             <p><strong>Search through our database here</strong> </p>
@@ -58,15 +63,17 @@ License: Creative Commons Attribution
 		
 		<?php
 		include "db_connect.php";
-		$query = "SELECT title, platform,`condition`, price, userID FROM listings";
+
+		$query = "SELECT title, platform, `condition`, price, userID FROM listings";
+
 		if (empty($_POST['title']) == false)
 		{
-			
 			$titleSearch = mysqli_real_escape_string($db, trim($_POST['title']));
 			$query .= " WHERE (title LIKE '$titleSearch%' OR title LIKE '%$titleSearch%')";
 			$result = mysqli_query($db, $query)
 				or die("Error Querying Database");
 		}
+
 		if (empty($_POST['platform']) == false) {
 			if (empty($_POST['title']) == true)
 				$query .= " WHERE";
@@ -75,7 +82,7 @@ License: Creative Commons Attribution
 			$platformSearch = mysqli_real_escape_string($db, trim($_POST['platform']));
 			$query .= " (platform LIKE '$platformSearch%' OR platform LIKE '%$platformSearch%')";
 		}
-		
+
 		if (empty($_POST['condition']) == false)
 		{
 			if (empty($_POST['title']) == true && empty($_POST['platform']) == true)
@@ -85,25 +92,26 @@ License: Creative Commons Attribution
 			$conditionSearch = $_POST['condition'];
 			$query .= " (`condition` = $conditionSearch)";
 		}
-		
+
 		$priceSearch = mysqli_real_escape_string($db, trim($_POST['price']));
 		if (empty($_POST['title']) == true && empty($_POST['platform']) == true && empty($_POST['condition']) == true)
 		{
 			if ($priceSearch <> 'allprice')
-				$query .= " WHERE price <= $priceSearch";
+				$query .= " WHERE price <= $priceSearch ORDER BY price";
 			else
-				$query .= " ORDER BY price";
+				$query .= " ORDER BY price DESC";
 		}
 		else
 		{
 			if ($priceSearch <> 'allprice')
-				$query .= " AND price <= $priceSearch ORDER BY price";
+				$query .= " AND price <= $priceSearch ORDER BY title, price DESC";
 			else
-				$query .= " ORDER BY title";
+				$query .= " ORDER BY title, price DESC";
 		}
-		
+
 		$result = mysqli_query($db, $query)
 			or die("Error Querying Database");
+
 		echo "<table id=\"hor-minimalist-b\">\n<tr><th>Title</th><th>Platform</th><th>Condition</th><th>Price</th><th>UserID</th><tr>\n\n";
 		while($row = mysqli_fetch_array($result)) {
 			$title = $row['title'];
