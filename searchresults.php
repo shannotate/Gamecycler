@@ -119,7 +119,11 @@ License: Creative Commons Attribution
 			$condition = $row['condition'];
 			$price = $row['price'];
 			$userID = $row['userID'];
-			echo "<tr><td	>$title</td><td	>$platform</td><td	>$condition</td><td	>$price</td><td	>$userID</td></tr>\n";
+			$userQuery = "SELECT email FROM users WHERE userID = $userID";
+			$userResult = mysqli_query($db, $userQuery);
+			$row = mysqli_fetch_array($userResult);
+			$email = $row['email'];
+			echo "<tr><td	>$title</td><td	>$platform</td><td	>$condition</td><td	>$price</td><td	>$email</td></tr>\n";
 		}
 		echo "</table>\n";
 		?>
