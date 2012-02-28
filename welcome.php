@@ -39,95 +39,64 @@ License: Creative Commons Attribution
 				$email = mysqli_real_escape_string($db, $_POST['email']);
 				$password =  mysqli_real_escape_string($db, $_POST['password']);
 				
-				$query = "SELECT * FROM users WHERE email = '$email' AND password = SHA('$password');";
-				$result = mysqli_query($db, $query)
-					or die(mysqli_error($db));
+				if ($_GET['newaccount'] == 1) {
+					$firstname = mysqli_real_escape_string($db, $_POST['firstname']);
+					$lastname = mysqli_real_escape_string($db, $_POST['lastname']);
+					$street = mysqli_real_escape_string($db, $_POST['address']);
+					$apt = mysqli_real_escape_string($db, $_POST['apt']);
+					$country = mysqli_real_escape_string($db, $_POST['country']);
+					$city = mysqli_real_escape_string($db, $_POST['city']);
+					$zipcode = mysqli_real_escape_string($db, $_POST['zipcode']);
 					
-				if ($row = mysqli_fetch_array($result)) {
-					$userid = $row['userID'];
-					$firstname = $row['firstname'];
-					echo "<h2>Welcome, $firstname!</h2>";
-					unset($_SESSION['submitattempt']);
-					$_SESSION['userid'] = $userid;
+					$query = "SELECT * FROM users WHERE `email` = '$email';";
+					
+					$result = mysqli_query($db, $query)
+						or die(mysqli_error($db));
+						
+					if ($row = mysqli_fetch_array($result)) {
+						echo "<h2>That email address is taken.</h2>";
 					} else {
-					echo "<h2>Incorrect email or password.</h2>";
+						$query = "INSERT INTO users	(
+								`firstname`, `lastname`, `email`, `password`, `street`, `apt`, `country`, `city`, `zipcode`)
+								VALUES (
+								'$firstname', '$lastname', '$email', SHA('$password'), '$street', '$apt', '$country', '$city', '$zipcode');";
+					
+						$result = mysqli_query($db, $query)
+							or die(mysqli_error($db));
+							
+						echo "<h2>Thanks for registering, $firstname</h2>";
+						
+						$query = "SELECT * FROM users WHERE email = '$email';";
+						$result = mysqli_query($db, $query)
+							or die(mysqli_error($db));
+							
+						if ($row = mysqli_fetch_array($result)) {
+							$userid = $row['userID'];
+							$_SESSION['userid'] = $userid;
+						}
+					}
+					
 				}
-				
+				else {
+					$query = "SELECT * FROM users WHERE email = '$email' AND password = SHA('$password');";
+					$result = mysqli_query($db, $query)
+						or die(mysqli_error($db));
+					
+					if ($row = mysqli_fetch_array($result)) {
+						echo "<h2>Welcome, $firstname!</h2>";
+						$userid = $row['userID'];
+						$firstname = $row['firstname'];
+						unset($_SESSION['submitattempt']);
+						$_SESSION['userid'] = $userid;
+						} else {
+							echo "<h2>Incorrect email or password.</h2>";
+						}
+				}
 			?>
 			
             
             <p>&nbsp;</p>
 
-            
-            <h3>Lists</h3>
-            <ul>
-                <li>List item</li>
-                <li>List item</li>
-                <li>List item</li>
-            </ul>
-                    
-            <ol>
-                <li>List item</li>
-                <li>List item</li>
-                <li>List item</li>
-            </ol>
-
-            <p>&nbsp;</p>
-
-            
-                
-            <h3>Code and blockquote</h3>
-            <code>&lt;? echo('Hello world'); ?&gt;</code>
-
-            <blockquote><p>Mauris sit amet tortor in urna tincidunt aliquam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas</p></blockquote>
-
-            
-            <p>&nbsp;</p>           
-            
-            <h3>Table</h3>
-
-            <table cellspacing="0">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Age</th>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td>John Smith</td>
-                    <td>28</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Fred James</td>
-                    <td>49</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Rachel Johnson</td>
-                    <td>19</td>
-                </tr>
-
-            </table>
-
-            <p>&nbsp;</p>
-
-            
-            <h3>Form</h3>
-
-            <fieldset>
-                <legend>Form legend</legend>
-                <form action="#" method="get">
-                    <p><label for="name">Name:</label>
-                    <input name="name" id="name" value="" type="text" /></p>
-                    <p><label for="email">Email:</label>
-                    <input name="email" id="email" value="" type="text" /></p>
-
-                    <p><label for="message">Message:</label>
-                    <textarea cols="37" rows="11" name="message" id="message"></textarea></p>
-                    <p><input name="send" style="margin-left: 150px;" class="formbutton" value="Send" type="submit" /></p>
-                </form>
-            </fieldset>
             
         </div>
         
