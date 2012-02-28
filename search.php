@@ -33,9 +33,9 @@ License: Creative Commons Attribution
 		<div id="content">
 			<?php
 			session_start();
-			if (isset($_SESSION['username']))
+			if (isset($_SESSION['userid']))
 			{
-			echo "What's going on, $_SESSION[username]?!";
+			echo "What's going on, $_SESSION[userid]?!";
 			echo "<p>&nbsp;</p><p><a href=\"logout.php\">logout</a></p>";
 			}
 			?>
@@ -87,7 +87,7 @@ License: Creative Commons Attribution
             <div class="clear"></div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; GameCycler 2012. Design by GameCycler Team | Template Source: <a href="http://www.spyka.net" title="spyka webmaster">spyka Webmaster</a> <a href="http://www.justfreetemplates.com">Free Web Templates</a></p>
+            <p>&copy; GameCycler 2012 | Design by GameCycler Team | Template Source: <a href="http://www.spyka.net" title="spyka webmaster">spyka Webmaster</a> <a href="http://www.justfreetemplates.com">Free Web Templates</a></p>
          </div>
     </div>
 </div>

@@ -1,9 +1,0 @@
-	David Daube
-	Shannon Sossamon
-	Shane Vetti
-
-
-	GameCycler
-
-
-	Our concept is a Craigslist/eBay-like site in which the primary focus is buying, selling, and trading video games. People who are trying to buy these previously-owned games will be able to both see an entire list of the games posted within the generation of gaming in which they are interested, or perform a custom search based on attributes that games commonly possess, such as release year, genre, or platform, as well as qualifiers that would commonly apply to a marketplace site, like an asking price, item condition, contact information, and miscellaneous notes about a particular copy of a game.

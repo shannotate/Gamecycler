@@ -35,7 +35,7 @@ License: Creative Commons Attribution
 			<h2>Welcome!</h2>
 				<?php
 				session_start();
-				if (isset($_SESSION['username']))
+				if (isset($_SESSION['userid']))
 				{
 				echo "What's going on, $_SESSION[userid]?!";
 				echo "<p>&nbsp;</p><p><a href=\"logout.php\">logout</a></p>";

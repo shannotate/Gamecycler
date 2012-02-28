@@ -33,9 +33,9 @@ License: Creative Commons Attribution
 		<div id="content">
 			<?php
 			session_start();
-			if (isset($_SESSION['username']))
+			if (isset($_SESSION['userid']))
 			{
-			echo "What's going on, $_SESSION[username]?!";
+			echo "What's going on, $_SESSION[userid]?!";
 			echo "<p>&nbsp;</p><p><a href=\"logout.php\">logout</a></p>";
 			}
 			?>
@@ -57,7 +57,6 @@ License: Creative Commons Attribution
 		</form>
 		
 		<?php
-		session_start();
 		include "db_connect.php";
 		$query = "SELECT title, platform,`condition`, price, userID FROM listings";
 		if (empty($_POST['title']) == false)
