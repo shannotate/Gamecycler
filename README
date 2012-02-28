@@ -1,0 +1,7 @@
+To install this site:
+Clone the repository and move it into your xampp/htdocs folder (/applications/xampp/htdocs on OS X).
+You may have to change the owner with chown <account> Gamecycler.
+Set the folder permissions to 755 and the contents to 644 (chmod 755 Gamecycler, chmod 644 Gamecycler/*).
+Now, open MySQL from the Gamecycler folder and source info.sql.
+You should now be able to see the site in your browser at localhost/Gamecycler,
+assuming that your MySQL and Apache server is running.

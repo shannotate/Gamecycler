@@ -2,6 +2,8 @@ DROP DATABASE IF EXISTS `cyclerinfo`;
 CREATE DATABASE IF NOT EXISTS `cyclerinfo`;
 USE `cyclerinfo`;
 
+GRANT ALL PRIVILEGES ON `cyclerinfo`.* TO 'admin'@'localhost' IDENTIFIED BY 'adminpw';
+
 --
 -- Defining a table to hold game listings
 --

@@ -1,4 +1,4 @@
 <?php
   	$db = mysqli_connect('localhost', 'admin', 'adminpw', 'cyclerinfo')
-		or die (mysqli_error());
+		or die (mysqli_error($db));
 ?>	

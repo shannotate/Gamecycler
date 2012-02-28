@@ -1,6 +1,5 @@
 <?php
 session_start();
-session_unset();
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -43,7 +42,7 @@ License: Creative Commons Attribution
 		<div id="content">
             <?php
 			include "db_connect.php";
-			if ($_SESSION['submitattempt'] == 1) {
+			if (isset($_SESSION['submitattempt']) && ($_SESSION['submitattempt'] == 1)) {
 				echo "<h2>Please log in before submitting a game.</h2>";
 				echo "<p>&nbsp;</p>";
 			}
