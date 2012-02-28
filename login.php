@@ -6,7 +6,7 @@ session_unset();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>GameCycler Examples</title>
+<title>GameCycler Login</title>
 <link rel="stylesheet" href="styles.css" type="text/css" />
 <!--
 genesis, a free CSS web template by spyka Webmaster (www.spyka.net)
@@ -68,6 +68,12 @@ License: Creative Commons Attribution
         </div>
 
         <div class="sidebar">
+			<ul>
+				<h3>About</h3>
+				<li>
+                	<p style="margin: 0;">GameCycler was created by four students at the University of Mary Washington.  It it copyrighted under the Creative Commons license</p>
+				</li>
+			</ul>
         </div>
     	<div class="clear"></div>
     </div>

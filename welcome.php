@@ -5,7 +5,7 @@ session_start();
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>GameCycler Examples</title>
+<title>GameCycler Welcome</title>
 <link rel="stylesheet" href="styles.css" type="text/css" />
 <!--
 genesis, a free CSS web template by spyka Webmaster (www.spyka.net)
@@ -111,12 +111,11 @@ License: Creative Commons Attribution
         <div class="sidebar">
             <ul>	
                <li>
-                    <h3>Navigate</h3>
-                    <ul class="blocklist">
-                        <li><a href="index.php">Home</a></li>
-						<li><a href="createaccount.php">Create an Account!</a></li>
-                        <li><a href="gamesubmit.php">Post a Game!</a></li>
-						<li><a href="search.php">Search for Games!</a></li>
+                    <h3>About</h3>
+                    <ul>
+						<li>
+                        	<p style="margin: 0;">GameCycler was created by four students at the University of Mary Washington.  It it copyrighted under the Creative Commons license</p>
+                        </li>
                     </ul>
                 </li>
             </ul> 
