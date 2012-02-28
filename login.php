@@ -48,7 +48,7 @@ License: Creative Commons Attribution
 			}
             ?>
             
-            <h3>Form</h3>
+
 
             <fieldset>
                 <legend>Login</legend>
