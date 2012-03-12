@@ -50,7 +50,13 @@ License: Creative Commons Attribution
 		<form action="searchresults.php" method="post">
 			Title: <input type="text" name="title" /><br />
 			Platform: <input type="text" name="platform" />
-			Condition <input type="text" name="condition" />
+			Condition: <select name="condition">
+			<option value="1">1 - Pristine</option>
+			<option value="2">2 - Excellent</option>
+			<option value="3" selected="selected">3 - Good</option>
+			<option value="4">4 - Bad</option>
+			<option value="5">5 - Terrible</option>
+			</select>
 			Price: <select name="price">
 			<option value="10">Less than $10</option>
 			<option value="20">Less than $20</option>
