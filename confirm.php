@@ -57,15 +57,20 @@ License: Creative Commons Attribution
 						
 				$result = mysqli_query($db, $query)
 					or die(mysqli_error($db));
+					
+				$query = "SELECT `listingID` FROM `listings` WHERE `userID` = '$userid' AND `title` = '$title';";
+				$result = mysqli_query($db, $query)
+					or die(mysqli_error($db));
 				
-				
+				$row = mysqli_fetch_array($result);
+				$listingID = $row['listingID'];
+				echo "<h3>listingID: $listingID</h3>";
 				$_SESSION['justposted'] = 1;
 				echo "<h3>Thank you!</h3>";	
 				echo "&nbsp;";
-				echo "<a href=\"viewlisting.php\">Click here</a> to view your listing.";
+				echo "<a href=\"viewlisting.php?id=$listingID\">Click here</a> to view your listing.";
 				
 				?>
-			
             
         </div>
         
