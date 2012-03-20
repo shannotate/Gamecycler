@@ -47,30 +47,38 @@ License: Creative Commons Attribution
 			<h2>Search</h2>
             <p><strong>Search through our database here</strong> </p>
 	<br><Br>
+		<fieldset>
 		<form action="searchresults.php" method="post">
-			Title: <input type="text" name="title" /><br />
-			Platform: <input type="text" name="platform" />
-			Condition: <select name="condition">
+			<p><label for="title">Title:</label>
+			<input type="text" name="title" /><br /></p>
+			<p><label for="platform">Platform:</label>
+			<input type="text" name="platform" /></p>
+			
+			<p><label for="condition">Condition:</label>
+			<select name="condition"></p>
 			<option value="1">1 - Pristine</option>
 			<option value="2">2 - Excellent</option>
 			<option value="3" selected="selected">3 - Good</option>
 			<option value="4">4 - Bad</option>
 			<option value="5">5 - Terrible</option>
 			</select>
-			Price: <select name="price">
+			
+			<p><label for="price">Price:</label>
+			<select name="price"></p>
 			<option value="10">Less than $10</option>
 			<option value="20">Less than $20</option>
 			<option value="30" selected="selected">Less than $30</option>
 			<option value="40">Less than $40</option>
 			<option value="allprice">All</option>
 			</select>
-			<button type="submit">Go!</button>
+			<p><input name="submit" style="margin-left: 150px;" class="formbutton" value="Go!" type="submit" /></p>
 		</form>
+		</fieldset>
 		
 		<?php
 		include "db_connect.php";
 
-		$query = "SELECT title, platform, `condition`, price, userID FROM listings";
+		$query = "SELECT title, platform, `condition`, price, email FROM listings NATURAL JOIN users";
 
 		if (empty($_POST['title']) == false)
 		{
@@ -89,7 +97,7 @@ License: Creative Commons Attribution
 			$query .= " (platform LIKE '$platformSearch%' OR platform LIKE '%$platformSearch%')";
 		}
 
-		if (empty($_POST['condition']) == false)
+		if (empty($_POST['condition']) == false && ($_POST['condition']) != 6)
 		{
 			if (empty($_POST['title']) == true && empty($_POST['platform']) == true)
 				$query .= " WHERE";
@@ -125,9 +133,9 @@ License: Creative Commons Attribution
 			$condition = $row['condition'];
 			$price = $row['price'];
 			$userID = $row['userID'];
-			$userQuery = "SELECT email FROM users WHERE userID = $userID";
-			$userResult = mysqli_query($db, $userQuery);
-			$row = mysqli_fetch_array($userResult);
+	#		$userQuery = "SELECT email FROM users WHERE userID = $userID";
+	#		$userResult = mysqli_query($db, $userQuery);
+	#		$row = mysqli_fetch_array($userResult);
 			$email = $row['email'];
 			echo "<tr><td	>$title</td><td	>$platform</td><td	>$condition</td><td	>$price</td><td	>$email</td></tr>\n";
 		}

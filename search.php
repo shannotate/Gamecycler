@@ -47,25 +47,34 @@ License: Creative Commons Attribution
 			<h2>Search</h2>
             <p><strong>Search through our database here</strong> </p>
 	<br><Br>
+		<fieldset>
 		<form action="searchresults.php" method="post">
-			Title: <input type="text" name="title" /><br />
-			Platform: <input type="text" name="platform" />
-			Condition: <select name="condition">
+			<p><label for="title">Title:</label>
+			<input type="text" name="title" /><br /></p>
+			<p><label for="platform">Platform:</label>
+			<input type="text" name="platform" /></p>
+			
+			<p><label for="condition">Condition:</label>
+			<select name="condition"></p>
 			<option value="1">1 - Pristine</option>
 			<option value="2">2 - Excellent</option>
 			<option value="3" selected="selected">3 - Good</option>
 			<option value="4">4 - Bad</option>
 			<option value="5">5 - Terrible</option>
+			<option value="6">All</option> 
 			</select>
-			Price: <select name="price">
+			
+			<p><label for="price">Price:</label>
+			<select name="price"></p>
 			<option value="10">Less than $10</option>
 			<option value="20">Less than $20</option>
 			<option value="30" selected="selected">Less than $30</option>
 			<option value="40">Less than $40</option>
 			<option value="allprice">All</option>
 			</select>
-			<button type="submit">Go!</button>
+			<p><input name="submit" style="margin-left: 150px;" class="formbutton" value="Go!" type="submit" /></p>
 		</form>
+		</fieldset>
 		
 		</div>
         

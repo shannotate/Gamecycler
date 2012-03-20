@@ -15,9 +15,6 @@ CREATE TABLE `listings` (
 	`listingID` INT(20) NOT NULL auto_increment,
 	`title` VARCHAR(50) NOT NULL default '',
 	`platform` VARCHAR(20) NOT NULL default '',
-	-- condition is a reserved word. fancy that.
-	-- apparently, that's why you're supposed to use graves (`)
-	-- to quote things. so that's a good hour wasted.
 	`condition` ENUM('Pristine','Excellent','Good','Bad','Terrible'),
 	`price` DECIMAL(6,2),
 	`userID` INT(10),
@@ -39,6 +36,8 @@ CREATE TABLE `users` (
 	`buyerrating` INT(3) NOT NULL default '0',
 	`firstname` VARCHAR(30) NOT NULL default '',
 	`lastname` VARCHAR(30) NOT NULL default '',
+	-- The address lines are split because we'd planned on allowing
+	-- searches by country and city, and possibly zipcode.
 	`country` VARCHAR(35) NOT NULL default '',
 	`city` VARCHAR(35) NOT NULL default '',
 	`street` VARCHAR(140) NOT NULL default '',
@@ -92,7 +91,6 @@ VALUES (
 	'90210'
 );
 
--- The first guy posts this game for sale
 INSERT INTO `listings` (`title`,`platform`,`condition`,`price`,`userID`)
 VALUES ('SomeGame', 'PSOne', 3, 3.50, 1),
 ('Metal Gear Solid', 'PSOne', 2, 12.21, 1),
@@ -109,7 +107,6 @@ VALUES ('SomeGame', 'PSOne', 3, 3.50, 1),
 ('Super Smash Bros.', 'N64', 2, 23.34, 2),
 ('Yoshi\'s Island', 'SNES', 5, 36.12, 1);
 
--- The game sells to the second guy. They both rated the experience as medium shitty.
 INSERT INTO `transactions` (
 	`sellerID`, `buyerID`, `listingID`, `sellerrating`, `buyerrating`
 )
