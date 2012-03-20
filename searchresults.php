@@ -61,6 +61,7 @@ License: Creative Commons Attribution
 			<option value="3" selected="selected">3 - Good</option>
 			<option value="4">4 - Bad</option>
 			<option value="5">5 - Terrible</option>
+			<option value="6">All</option>
 			</select>
 			
 			<p><label for="price">Price:</label>
