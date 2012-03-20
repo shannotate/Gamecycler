@@ -43,7 +43,8 @@ License: Creative Commons Attribution
 			
 		<?php
 			include "db_connect.php";
-			if (isset($_SESSION['justposted']) && isset($_SESSION['userid'])) {
+			$listingID = $_GET['listingID'];
+			if (isset($_SESSION['listingID']) && isset($_SESSION['userid'])) {
 			
 				$userid = $_SESSION['userid'];
 				$query = "SELECT * FROM `listings` WHERE `userID` = '$userid' ORDER BY `listingID` DESC LIMIT 1;";
@@ -62,7 +63,7 @@ License: Creative Commons Attribution
 				echo "<h3>Platform: $platform</h3>";
 				echo "<h3>Condition: $condition</h3>";
 				echo "<h3>Price: $price</h3>";
-				unset($_SESSION['justposted']);
+			
 				}
         
         ?>
