@@ -44,7 +44,7 @@ License: Creative Commons Attribution
 		<?php
 			include "db_connect.php";
 			$listingID = $_GET['id'];
-			if (isset('listingID')) {
+			if (isset('$listingID')) {
 			
 				$query = "SELECT * FROM `listings` WHERE `listingID` = '$listingID'"";
 				
