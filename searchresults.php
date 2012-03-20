@@ -79,7 +79,7 @@ License: Creative Commons Attribution
 		<?php
 		include "db_connect.php";
 
-		$query = "SELECT title, platform, `condition`, price, email FROM listings NATURAL JOIN users";
+		$query = "SELECT title, platform, `condition`, price, email, listingID FROM listings NATURAL JOIN users";
 
 		if (empty($_POST['title']) == false)
 		{
@@ -134,11 +134,12 @@ License: Creative Commons Attribution
 			$condition = $row['condition'];
 			$price = $row['price'];
 			$userID = $row['userID'];
+			$listingID = $row['listingID'];
 	#		$userQuery = "SELECT email FROM users WHERE userID = $userID";
 	#		$userResult = mysqli_query($db, $userQuery);
 	#		$row = mysqli_fetch_array($userResult);
 			$email = $row['email'];
-			echo "<tr><td	>$title</td><td	>$platform</td><td	>$condition</td><td	>$price</td><td	>$email</td></tr>\n";
+			echo "<tr><td	><a href=\"viewlisting.php?id=$listingID\">$title</a></td><td	>$platform</td><td	>$condition</td><td	>$price</td><td	>$email</td></tr>\n";
 		}
 		echo "</table>\n";
 		?>
