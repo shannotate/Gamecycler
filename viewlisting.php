@@ -44,10 +44,9 @@ License: Creative Commons Attribution
 		<?php
 			include "db_connect.php";
 			$listingID = $_GET['listingID'];
-			if (isset($_SESSION['listingID']) && isset($_SESSION['userid'])) {
+			if (isset('listingID')) {
 			
-				$userid = $_SESSION['userid'];
-				$query = "SELECT * FROM `listings` WHERE `userID` = '$userid' ORDER BY `listingID` DESC LIMIT 1;";
+				$query = "SELECT * FROM `listings` WHERE `listingID` = '$listingID'"";
 				
 				$result = mysqli_query($db, $query)
 					or die(mysqli_error($db));
