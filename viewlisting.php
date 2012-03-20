@@ -44,7 +44,6 @@ License: Creative Commons Attribution
 		<?php
 			include "db_connect.php";
 			$listingID = $_GET['id'];
-			if (isset('$listingID')) {
 			
 				$query = "SELECT * FROM `listings` WHERE `listingID` = '$listingID'"";
 				
@@ -63,7 +62,7 @@ License: Creative Commons Attribution
 				echo "<h3>Condition: $condition</h3>";
 				echo "<h3>Price: $price</h3>";
 			
-				}
+				
         
         ?>
         </div>
