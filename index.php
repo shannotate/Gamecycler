@@ -42,11 +42,6 @@ License: Creative Commons Attribution
 	
 		<div id="content">
 			<h2>Welcome!</h2>
-			<?php
-			if (isset($_SESSION['firstname'])) {
-				echo "What's going on, $_SESSION[firstname]?!";
-			}
-			?>
             <p><strong>GameCycler</strong> is a marketplace for buying, trading, and selling previously-owned video games on their original storage mediums.</p>
         </div>
         

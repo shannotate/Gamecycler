@@ -40,11 +40,6 @@ License: Creative Commons Attribution
     </div>
     <div id="body">
 		<div id="content">
-			<?php
-			if (isset($_SESSION['firstname']))
-				echo "How're tricks, $_SESSION[firstname]?!";
-			?>
-			<h2>Search</h2>
             <p><strong>Search through our database here</strong> </p>
 	<br><Br>
 		<fieldset>

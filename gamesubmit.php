@@ -49,8 +49,6 @@ License: Creative Commons Attribution
 				$_SESSION['submitattempt'] = 1;
 				header( 'Location: login.php' );
 			}
-			if (isset($_SESSION['firstname']))
-				echo "Been gaming, $_SESSION[firstname]?!";
 			?>
             
             
