@@ -79,7 +79,7 @@ License: Creative Commons Attribution
 		<?php
 		include "db_connect.php";
 
-		$query = "SELECT title, platform, `condition`, price, email, listingID FROM listings NATURAL JOIN users";
+		$query = "SELECT title, platform, `condition`, price, email, listingID FROM listings NATURAL JOIN users"; 
 
 		if (empty($_POST['title']) == false)
 		{
@@ -123,11 +123,12 @@ License: Creative Commons Attribution
 			else
 				$query .= " ORDER BY title, price DESC";
 		}
-
+		
+		echo "<table id=\"hor-minimalist-b\">\n<tr><th>Title</th><th>Platform</th><th>Condition</th><th>Price</th><th>UserID</th><tr>\n\n";
+		
 		$result = mysqli_query($db, $query)
 			or die("Error Querying Database");
 
-		echo "<table id=\"hor-minimalist-b\">\n<tr><th>Title</th><th>Platform</th><th>Condition</th><th>Price</th><th>UserID</th><tr>\n\n";
 		while($row = mysqli_fetch_array($result)) {
 			$title = $row['title'];
 			$platform = $row['platform'];
@@ -135,12 +136,10 @@ License: Creative Commons Attribution
 			$price = $row['price'];
 			$userID = $row['userID'];
 			$listingID = $row['listingID'];
-	#		$userQuery = "SELECT email FROM users WHERE userID = $userID";
-	#		$userResult = mysqli_query($db, $userQuery);
-	#		$row = mysqli_fetch_array($userResult);
 			$email = $row['email'];
 			echo "<tr><td	><a href=\"viewlisting.php?id=$listingID\">$title</a></td><td	>$platform</td><td	>$condition</td><td	>$price</td><td	>$email</td></tr>\n";
 		}
+		
 		echo "</table>\n";
 		?>
 		

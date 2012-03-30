@@ -51,6 +51,7 @@ License: Creative Commons Attribution
 				$lastname = mysqli_real_escape_string($db, $_POST['lastname']);
 				$street = mysqli_real_escape_string($db, $_POST['address']);
 				$apt = mysqli_real_escape_string($db, $_POST['apt']);
+				$street = $street . $apt;
 				$country = mysqli_real_escape_string($db, $_POST['country']);
 				$city = mysqli_real_escape_string($db, $_POST['city']);
 				$zipcode = mysqli_real_escape_string($db, $_POST['zipcode']);
@@ -64,22 +65,29 @@ License: Creative Commons Attribution
 					echo "<h2>That email address is taken.</h2>";
 				} else {
 					$query = "INSERT INTO users	(
-							`firstname`, `lastname`, `email`, `password`, `street`, `apt`, `country`, `city`, `zipcode`)
+							`firstname`, `lastname`, `email`, `password`)
 							VALUES (
-							'$firstname', '$lastname', '$email', SHA('$password'), '$street', '$apt', '$country', '$city', '$zipcode');";
-				
+							'$firstname', '$lastname', '$email', SHA('$password'));";
+							
 					$result = mysqli_query($db, $query)
 						or die(mysqli_error($db));
-						
+							
 					echo "<h2>Thanks for registering, $firstname</h2>";
 					
 					$query = "SELECT * FROM users WHERE email = '$email';";
 					$result = mysqli_query($db, $query)
 						or die(mysqli_error($db));
 						
+						
 					if ($row = mysqli_fetch_array($result)) {
 						$userid = $row['userID'];
+						$query = "INSERT INTO `user address` (
+								`country`,`city`, `street`, `zipcode`, `userID`)
+								VALUES (
+								'$country', '$city', '$street', '$zipcode', '$userid');"; 
 						$_SESSION['userid'] = $userid;
+						$result = mysqli_query($db, $query)
+							or die(mysqli_error($db));
 					}
 				}
 				

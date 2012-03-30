@@ -5,9 +5,9 @@ USE `cyclerinfo`;
 GRANT ALL PRIVILEGES ON `cyclerinfo`.* TO 'admin'@'localhost' IDENTIFIED BY 'adminpw';
 
 --
--- Defining a table to hold game listings
+-- Defining table to hold game listings
 --
-
+	
 DROP TABLE IF EXISTS `listings`;
 
 --
@@ -18,12 +18,47 @@ CREATE TABLE `listings` (
 	`condition` ENUM('Pristine','Excellent','Good','Bad','Terrible'),
 	`price` DECIMAL(6,2),
 	`userID` INT(10),
+	CONSTRAINT users_userID_fk
+	FOREIGN KEY (`userID`)
+	REFERENCES `users` (`userID`),
 	PRIMARY KEY (`listingID`)
 );
 
 --
--- Defining a table to hold user information
+-- Defining tables to hold user information
 --
+
+DROP TABLE IF EXISTS `user ratings`;
+
+--
+CREATE TABLE `user ratings` (
+	`ratingID` INT (10) NOT NULL auto_increment,
+	`buyerrating` INT(3) NOT NULL default '0',
+	`sellerrating` INT(3) NOT NULL default '0',
+	`userID` INT(10) NOT NULL,
+	CONSTRAINT users_userID_fk
+	FOREIGN KEY (`userID`)
+	REFERENCES `users` (`userID`),
+	PRIMARY KEY (`ratingID`)
+);
+
+DROP TABLE IF EXISTS `user address`;
+
+--
+CREATE TABLE `user address` (
+	-- The address lines are split because we'd planned on allowing
+	-- searches by country and city, and possibly zipcode.
+	`addressID` INT(10) NOT NULL auto_increment,
+	`country` VARCHAR(35) NOT NULL default '',
+	`city` VARCHAR(35) NOT NULL default '',
+	`street` VARCHAR(140) NOT NULL default '',
+	`zipcode` CHAR(5), -- if we were using a full zipcode we would split this off with city and street underneath it
+	`userID` INT(10) NOT NULL,
+	CONSTRAINT users_userID_fk
+	FOREIGN KEY (`userID`)
+	REFERENCES `users` (`userID`),
+	PRIMARY KEY (`addressID`)
+);
 
 DROP TABLE IF EXISTS `users`;
 
@@ -32,17 +67,8 @@ CREATE TABLE `users` (
 	`userID` INT(10) NOT NULL auto_increment,
 	`email` VARCHAR(100) NOT NULL default 'unregistered@nothing.net',
 	`password` CHAR(64), -- the SHA256 hash will always be 64 characters in length
-	`sellerrating` INT(3) NOT NULL default '0',
-	`buyerrating` INT(3) NOT NULL default '0',
 	`firstname` VARCHAR(30) NOT NULL default '',
 	`lastname` VARCHAR(30) NOT NULL default '',
-	-- The address lines are split because we'd planned on allowing
-	-- searches by country and city, and possibly zipcode.
-	`country` VARCHAR(35) NOT NULL default '',
-	`city` VARCHAR(35) NOT NULL default '',
-	`street` VARCHAR(140) NOT NULL default '',
-	`apt` VARCHAR(100),
-	`zipcode` CHAR(5),
 	PRIMARY KEY (`userID`)
 );
 
@@ -58,8 +84,8 @@ CREATE TABLE `transactions` (
 	`sellerID` INT(10),
 	`buyerID` INT(10),
 	`listingID` INT(20),
-	`sellerrating` INT(3),
-	`buyerrating` INT(3),
+	`sellerrating` INT(3), -- new rating applied to the seller by the buyer this transaction
+	`buyerrating` INT(3), -- new rating applied to the buyer by the seller this transaction
 	PRIMARY KEY(`transactionID`)
 );
 	
@@ -69,27 +95,28 @@ CREATE TABLE `transactions` (
 
 -- Make two users to mess around with
 INSERT INTO `users` (
-	`email`,`password`,`firstname`,`lastname`,`country`,`city`,`street`,`zipcode`
+	`email`,`password`,`firstname`,`lastname`
 )
 VALUES (
 	'test@test.com',
-	SHA('testpassword'),
+	SHA('test'),
 	'test',
-	'mctest',
-	'usa',
-	'woodbridge',
-	'123 street',
-	'90210'
+	'mctest'
 ), (
 	'something@test.com',
-	SHA('somepassword'),
-	'guy',
-	'mcguy',
-	'usa',
-	'hoodbridge',
-	'321 street',
-	'90210'
+	SHA('test'),
+	'some',
+	'guy'
 );
+
+INSERT INTO `user address` (
+	`country`, `city`, `street`, `zipcode`, `userID`)
+VALUES (
+	'USA', 'Lakeridge', '6101 Somestreet Ln.', '90210', (SELECT `userID` FROM `users` WHERE `email` = 'test@test.com')
+), (
+	'USA', 'Woodbridge', '2101 Otherstreet Rd.', '90212', (SELECT `userID` FROM `users` WHERE `email` = 'something@test.com')
+);
+
 
 INSERT INTO `listings` (`title`,`platform`,`condition`,`price`,`userID`)
 VALUES ('SomeGame', 'PSOne', 3, 3.50, 1),
@@ -106,17 +133,6 @@ VALUES ('SomeGame', 'PSOne', 3, 3.50, 1),
 ('Super Star Wars: The Empire Strikes Back', 'SNES', 3, 24.22, 2),
 ('Super Smash Bros.', 'N64', 2, 23.34, 2),
 ('Yoshi\'s Island', 'SNES', 5, 36.12, 1);
-
-INSERT INTO `transactions` (
-	`sellerID`, `buyerID`, `listingID`, `sellerrating`, `buyerrating`
-)
-VALUES (
-	1,
-	2,
-	1,
-	60,
-	50
-);
 	
 
 	
