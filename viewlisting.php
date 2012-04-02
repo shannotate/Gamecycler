@@ -45,7 +45,7 @@ License: Creative Commons Attribution
 			include "db_connect.php";
 			$listingID = $_GET['id'];
 			
-				$query = "SELECT * FROM `listings` WHERE `listingID` = '$listingID'"";
+				$query = "SELECT * FROM `listings` WHERE `listingID` = '$listingID'";
 				
 				$result = mysqli_query($db, $query)
 					or die(mysqli_error($db));
