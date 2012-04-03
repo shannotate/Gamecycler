@@ -45,25 +45,12 @@ License: Creative Commons Attribution
 			include "db_connect.php";
 			$listingID = $_GET['id'];
 			
-				$query = "SELECT * FROM `listings` WHERE `listingID` = '$listingID'";
+				$query = "DELETE FROM `listings` WHERE `listingID` = '$listingID'";
 				
-				$result = mysqli_query($db, $query)
-					or die(mysqli_error($db));
+	
+
 				
-				$row = mysqli_fetch_array($result);
-				
-				$title = $row['title'];
-				$platform = $row['platform'];
-				$condition = $row['condition'];
-				$price = $row['price'];
-				
-				echo "<h3>Title: $title</h3>";
-				echo "<h3>Platform: $platform</h3>";
-				echo "<h3>Condition: $condition</h3>";
-				echo "<h3>Price: $price</h3>";
-			
-				echo "<form action=\"confirmDelete.php?id=$listingID\" method=\"post\"> <input name=\"submit\" style=\"margin-left: 150px;\" class=\"formbutton\" value=\"Delete\" type=\"submit\" /></form>";
-        
+				echo "You have successfully removed the game from the site"
         ?>
         
         </div>
