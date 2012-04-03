@@ -56,13 +56,18 @@ License: Creative Commons Attribution
 				$platform = $row['platform'];
 				$condition = $row['condition'];
 				$price = $row['price'];
+				$listingUserID = $row['userID'];
 				
 				echo "<h3>Title: $title</h3>";
 				echo "<h3>Platform: $platform</h3>";
 				echo "<h3>Condition: $condition</h3>";
 				echo "<h3>Price: $price</h3>";
 			
+				if (isset($_SESSION['userid'])) {
+					$userId = $_SESSION['userid'];
+							if($userId == $listingUserID){
 				echo "<form action=\"confirmDelete.php?id=$listingID\" method=\"post\"> <input name=\"submit\" style=\"margin-left: 150px;\" class=\"formbutton\" value=\"Delete\" type=\"submit\" /></form>";
+        }}
         
         ?>
         
