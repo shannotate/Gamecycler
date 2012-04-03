@@ -74,7 +74,7 @@ License: Creative Commons Attribution
 		<?php
 		include "db_connect.php";
 
-		$query = "SELECT title, platform, `condition`, price, email, listingID FROM listings NATURAL JOIN users"; 
+		$query = "SELECT title, platform, `condition`, price, email, listingID, listings.userID FROM listings NATURAL JOIN users"; 
 
 		if (empty($_POST['title']) == false)
 		{

@@ -18,9 +18,6 @@ CREATE TABLE `listings` (
 	`condition` ENUM('Pristine','Excellent','Good','Bad','Terrible'),
 	`price` DECIMAL(6,2),
 	`userID` INT(10),
-	CONSTRAINT users_userID_fk
-	FOREIGN KEY (`userID`)
-	REFERENCES `users` (`userID`),
 	PRIMARY KEY (`listingID`)
 );
 
@@ -28,24 +25,21 @@ CREATE TABLE `listings` (
 -- Defining tables to hold user information
 --
 
-DROP TABLE IF EXISTS `user ratings`;
+DROP TABLE IF EXISTS `user_ratings`;
 
 --
-CREATE TABLE `user ratings` (
+CREATE TABLE `user_ratings` (
 	`ratingID` INT (10) NOT NULL auto_increment,
 	`buyerrating` INT(3) NOT NULL default '0',
 	`sellerrating` INT(3) NOT NULL default '0',
 	`userID` INT(10) NOT NULL,
-	CONSTRAINT users_userID_fk
-	FOREIGN KEY (`userID`)
-	REFERENCES `users` (`userID`),
 	PRIMARY KEY (`ratingID`)
 );
 
-DROP TABLE IF EXISTS `user address`;
+DROP TABLE IF EXISTS `user_address`;
 
 --
-CREATE TABLE `user address` (
+CREATE TABLE `user_address` (
 	-- The address lines are split because we'd planned on allowing
 	-- searches by country and city, and possibly zipcode.
 	`addressID` INT(10) NOT NULL auto_increment,
@@ -54,9 +48,6 @@ CREATE TABLE `user address` (
 	`street` VARCHAR(140) NOT NULL default '',
 	`zipcode` CHAR(5), -- if we were using a full zipcode we would split this off with city and street underneath it
 	`userID` INT(10) NOT NULL,
-	CONSTRAINT users_userID_fk
-	FOREIGN KEY (`userID`)
-	REFERENCES `users` (`userID`),
 	PRIMARY KEY (`addressID`)
 );
 
@@ -109,7 +100,7 @@ VALUES (
 	'guy'
 );
 
-INSERT INTO `user address` (
+INSERT INTO `user_address` (
 	`country`, `city`, `street`, `zipcode`, `userID`)
 VALUES (
 	'USA', 'Lakeridge', '6101 Somestreet Ln.', '90210', (SELECT `userID` FROM `users` WHERE `email` = 'test@test.com')

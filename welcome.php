@@ -46,7 +46,7 @@ License: Creative Commons Attribution
 			$email = mysqli_real_escape_string($db, $_POST['email']);
 			$password =  mysqli_real_escape_string($db, $_POST['password']);
 			
-			if ($_GET['newaccount'] == 1) {
+			if ((isset($_GET['newaccount'])) && ($_GET['newaccount'] == 1)) {
 				$firstname = mysqli_real_escape_string($db, $_POST['firstname']);
 				$lastname = mysqli_real_escape_string($db, $_POST['lastname']);
 				$street = mysqli_real_escape_string($db, $_POST['address']);
@@ -81,7 +81,7 @@ License: Creative Commons Attribution
 						
 					if ($row = mysqli_fetch_array($result)) {
 						$userid = $row['userID'];
-						$query = "INSERT INTO `user address` (
+						$query = "INSERT INTO `user_address` (
 								`country`,`city`, `street`, `zipcode`, `userID`)
 								VALUES (
 								'$country', '$city', '$street', '$zipcode', '$userid');"; 
