@@ -47,7 +47,8 @@ License: Creative Commons Attribution
 			
 				$query = "DELETE FROM `listings` WHERE `listingID` = '$listingID'";
 				
-	
+				$result =  mysqli_query($db, $query)
+					or die("Error Querying Database");
 
 				
 				echo "You have successfully removed the game from the site"
