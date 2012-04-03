@@ -65,6 +65,9 @@ License: Creative Commons Attribution
 				
         
         ?>
+        <form action="confirmDelete.php" method="post">
+			 <input name="delete" style="margin-left: 150px;" class="formbutton" value="Delete" type="submit" />
+			 </form>
         </div>
         
         <div class="sidebar">
